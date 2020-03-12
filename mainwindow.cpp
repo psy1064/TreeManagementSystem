@@ -19,6 +19,7 @@ MainWindow::MainWindow(QWidget *parent) :
 
     model = new QSqlTableModel(this);
     model->setTable("Tree");    // 테이블명
+    model->select();
     ui->tableView->setModel(model);
 }
 
@@ -27,7 +28,31 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
-void MainWindow::on_pushButton_clicked()
+void MainWindow::on_selectButton_clicked()
 {
-    model->select();
+     model->select();
+}
+
+void MainWindow::on_deleteButton_clicked()
+{
+    QModelIndexList selection = ui->tableView->selectionModel()->selectedRows();
+    // Multiple rows can be selected
+    for(int i=0; i< selection.count(); i++)
+    {
+        QModelIndex index = selection.at(i);
+        qDebug() << index.row();
+    }
+
+}
+
+void MainWindow::on_insertButton_clicked()
+{
+    QString name = ui->nameEdit->text();
+    QString category = ui->nameEdit->text();
+
+    QSqlQuery qry;
+    qry.prepare(QString("insert into Tree(Name, Category) values('%1','%2')")
+                .arg(name).arg(category));
+    if( !qry.exec() )
+    qDebug() << qry.lastError();
 }
