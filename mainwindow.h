@@ -6,7 +6,7 @@
 #include <QSqlDatabase>
 #include <QDebug>
 #include <QSqlTableModel>
-
+#include <string>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -17,6 +17,7 @@ class MainWindow : public QMainWindow
 
 public:
     MainWindow(QWidget *parent = nullptr);
+    void addCategory();
     ~MainWindow();
 
 private slots:
