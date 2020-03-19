@@ -1,24 +1,26 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include <string>
+#include <qmessagebox.h>
+
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
     qDebug() << "드라이버" << QSqlDatabase::drivers();
-    qDebug() << QCoreApplication::libraryPaths();
     db = QSqlDatabase::addDatabase("QMYSQL");
     db.setHostName("127.0.0.1");      // IP 또는 DNS Host name
     db.setPort(3306);
-    db.setDatabaseName("tree"); // DB명
+    db.setDatabaseName("treemanage"); // DB명
     db.setUserName("root");     // 계정 명
     db.setPassword("12345678");     // 계정 Password
 
-    db.open();
+    if(!db.open())
+        QMessageBox::information(this,"에러","디비 연결 에러");
 
     model = new QSqlTableModel(this);
-    model->setTable("Tree");    // 테이블명
+    model->setTable("tree");    // 테이블명
     model->select();
     ui->tableView->setModel(model);
     ui->tableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);      // tableview를 가로폭에 딱 맞게 설정

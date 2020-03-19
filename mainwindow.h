@@ -7,6 +7,7 @@
 #include <QDebug>
 #include <QSqlTableModel>
 #include <string>
+#include <QMessageBox>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -29,5 +30,6 @@ private:
     Ui::MainWindow *ui;
     QSqlDatabase db;
     QSqlTableModel  *model;
+    QMessageBox qmessage;
 };
 #endif // MAINWINDOW_H
