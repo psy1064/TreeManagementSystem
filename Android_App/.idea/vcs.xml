@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="VcsDirectoryMappings">
+    <mapping directory="$PROJECT_DIR$/.." vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/DJU_OSP" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Java200Q" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/RaspberryPi_Study" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/TimeTimer" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/Tree" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/change_scope" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/coronaClinicMap" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/git_test" vcs="Git" />
+  </component>
+</project>
