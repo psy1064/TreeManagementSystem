@@ -2,9 +2,15 @@ package com.example.treemanagement;
 
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
+import android.os.Handler;
+import android.os.HandlerThread;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import org.json.JSONArray;
@@ -14,12 +20,15 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     private TextView textView;
+    private EditText editText;
+    private Button button;
     private String jsonString;
     ArrayList<Tree> treeArrayList;      // 나무정보들을 저장할 ArrayList
     @Override
@@ -27,24 +36,41 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.textView);
+        textView = (TextView) findViewById(R.id.treeLocation);
+        editText = (EditText) findViewById(R.id.editText);
+        button = (Button) findViewById(R.id.button);
 
-        JsonParse jsonParse = new JsonParse();      // AsyncTask 생성
-        jsonParse.execute("http://121.153.150.157:81/connect.php");     // AsyncTask 실행
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final JsonParse jsonParse = new JsonParse();      // AsyncTask 생성
+                jsonParse.execute("http://121.153.150.157:81/select.php");     // AsyncTask 실행
+            }
+        });
     }
 
     public class JsonParse extends AsyncTask<String, Void, String> {
         String TAG = "JsonParseTest";
         @Override
-        protected String doInBackground(String... strings) {    // execute의 매개변수를 받아와서 사용
+        protected String doInBackground(String... strings) {
+            // execute의 매개변수를 받아와서 사용
             String url = strings[0];
             try {
+                String selectData = "Data=" + editText.getText().toString();
+                // 따옴표 안과 php의 post [ ] 안이 이름이 같아야 함
                 URL serverURL = new URL(url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) serverURL.openConnection();
 
                 httpURLConnection.setReadTimeout(5000);
                 httpURLConnection.setConnectTimeout(5000);
+                httpURLConnection.setRequestMethod("POST");
                 httpURLConnection.connect();
+
+                OutputStream outputStream = httpURLConnection.getOutputStream();
+                outputStream.write(selectData.getBytes("UTF-8"));
+                outputStream.flush();
+                outputStream.close();
+                // 어플에서 데이터 전송
 
                 int responseStatusCode = httpURLConnection.getResponseCode();
 
@@ -54,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
                 }
                 else{
                     inputStream = httpURLConnection.getErrorStream();
-                }
+                } // 연결 상태 확인
 
                 InputStreamReader inputStreamReader = new InputStreamReader(inputStream, "UTF-8");
                 BufferedReader bufferedReader = new BufferedReader(inputStreamReader);
@@ -69,10 +95,9 @@ public class MainActivity extends AppCompatActivity {
                 bufferedReader.close();
                 Log.d(TAG, sb.toString().trim());
 
-                return sb.toString().trim();        // 받아온 JSON의 공백을 제거
+                return sb.toString().trim();        // 받아온 JSON 의 공백을 제거
             } catch (Exception e) {
                 Log.d(TAG, "InsertData: Error ", e);
-                String errorString = e.toString();
                 return null;
             }
         }
@@ -86,8 +111,9 @@ public class MainActivity extends AppCompatActivity {
             else {
                 jsonString = fromdoInBackgroundString;
                 treeArrayList = doParse();
-                Log.d(TAG,treeArrayList.get(0).getName());
-                textView.setText(treeArrayList.get(0).getName());
+                if(treeArrayList.size() == 0)   textView.setText("검색결과 없음");
+                // 객체의 크기가 0일때는 검색 결과가 없을 때이므로 검색결과 없음 설정
+                else textView.setText(treeArrayList.get(0).getLocation());
             }
         }
 
@@ -101,6 +127,10 @@ public class MainActivity extends AppCompatActivity {
             super.onProgressUpdate(values);
         }
 
+        @Override
+        protected void onCancelled(String s) {
+            super.onCancelled(s);
+        }
 
         private ArrayList<Tree> doParse() {
             ArrayList<Tree> tmpTreeArray = new ArrayList<Tree>();
