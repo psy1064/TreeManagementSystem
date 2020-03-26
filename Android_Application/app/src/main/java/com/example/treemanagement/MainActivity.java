@@ -1,9 +1,12 @@
 package com.example.treemanagement;
 
+import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.HandlerThread;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -12,6 +15,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -26,6 +30,7 @@ import java.net.URL;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
+    Context context = this;
     private TextView textView;
     private EditText editText;
     private Button button;
@@ -113,7 +118,22 @@ public class MainActivity extends AppCompatActivity {
                 treeArrayList = doParse();
                 if(treeArrayList.size() == 0)   textView.setText("검색결과 없음");
                 // 객체의 크기가 0일때는 검색 결과가 없을 때이므로 검색결과 없음 설정
-                else textView.setText(treeArrayList.get(0).getLocation());
+                else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
+                    builder.setTitle(editText.getText().toString() + "의 검색결과");
+                    CharSequence item[] = new CharSequence[treeArrayList.size()];
+                    for(int i = 0 ; i < treeArrayList.size() ; i++) {
+                        item[i] = "수고 = " + treeArrayList.get(i).getTreeHeight();
+                    }
+                    builder.setItems(item, new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                                textView.setText(treeArrayList.get(which).getLocation());
+                        }
+                    });
+                    AlertDialog alertDialog = builder.create();
+                    alertDialog.show();
+                }
             }
         }
 
