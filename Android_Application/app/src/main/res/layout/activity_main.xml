@@ -6,52 +6,96 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+    <Button
+        android:id="@+id/mark1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="51dp"
-        android:layout_marginLeft="51dp"
-        android:layout_marginTop="347dp"
-        android:text="검색하려는 나무의 이름 : " />
+        android:layout_marginStart="186dp"
+        android:layout_marginLeft="186dp"
+        android:layout_marginTop="160dp"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="주요 판매 설정"
+        android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="10dp"
-        android:layout_marginLeft="10dp"
-        android:layout_marginTop="334dp"
-        android:layout_toEndOf="@+id/textView"
-        android:layout_toRightOf="@+id/textView"
-        android:hint="나무 이름을 입력하세요" />
 
     <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentLeft="true"
+        android:id="@+id/mark2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="163dp"
-        android:layout_marginLeft="163dp"
-        android:layout_marginTop="403dp"
-        android:text="SELECT" />
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="160dp"
+        android:layout_toEndOf="@+id/mark1"
+        android:layout_toRightOf="@+id/mark1"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="주요 판매 설정"
+        android:textSize="20sp" />
 
-    <TextView
-        android:id="@+id/treeLocation"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/textView"
+    <Button
+        android:id="@+id/mark3"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="160dp"
+        android:layout_toEndOf="@+id/mark2"
+        android:layout_toRightOf="@+id/mark2"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="주요 판매 설정"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/recent1"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/mark1"
         android:layout_alignParentStart="true"
         android:layout_alignParentLeft="true"
-        android:layout_marginStart="180dp"
-        android:layout_marginLeft="180dp"
-        android:layout_marginTop="102dp"
-        android:text="나무위치" />
+        android:layout_marginStart="186dp"
+        android:layout_marginLeft="186dp"
+        android:layout_marginTop="80dp"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="최근 판매"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/recent2"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/mark2"
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="80dp"
+        android:layout_toEndOf="@+id/recent1"
+        android:layout_toRightOf="@+id/recent1"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="최근 판매"
+        android:textSize="20sp" />
+
+    <Button
+        android:id="@+id/select"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_below="@+id/mark3"
+        android:layout_marginStart="160dp"
+        android:layout_marginLeft="160dp"
+        android:layout_marginTop="80dp"
+        android:layout_toEndOf="@+id/recent2"
+        android:layout_toRightOf="@+id/recent2"
+        android:background="@drawable/rect"
+        android:gravity="center"
+        android:text="검색"
+        android:textSize="20sp" />
+
 
 </RelativeLayout>

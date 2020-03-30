@@ -1,6 +1,8 @@
 package com.example.treemanagement;
 
-public class Tree {
+import java.io.Serializable;
+
+public class Tree implements Serializable {
     String name;            // 이름
     String category;        // 카테고리
     String keyword;         // 키워드

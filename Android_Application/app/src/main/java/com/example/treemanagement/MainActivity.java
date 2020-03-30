@@ -2,6 +2,7 @@ package com.example.treemanagement;
 
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -31,25 +32,38 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity {
     Context context = this;
-    private TextView textView;
-    private EditText editText;
-    private Button button;
+    private Button selectButton, markButton1;
     private String jsonString;
     ArrayList<Tree> treeArrayList;      // 나무정보들을 저장할 ArrayList
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+        // 화면을 landscape(가로) 화면으로 고정하고 싶은 경우
+
         setContentView(R.layout.activity_main);
 
-        textView = (TextView) findViewById(R.id.treeLocation);
-        editText = (EditText) findViewById(R.id.editText);
-        button = (Button) findViewById(R.id.button);
+        selectButton = (Button) findViewById(R.id.select);
 
-        button.setOnClickListener(new View.OnClickListener() {
+        selectButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                final JsonParse jsonParse = new JsonParse();      // AsyncTask 생성
-                jsonParse.execute("http://121.153.150.157:81/select.php");     // AsyncTask 실행
+                final EditText et = new EditText(getApplicationContext());
+                et.setSingleLine();
+                AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                builder.setTitle("나무 이름 검색");
+                builder.setView(et);
+                builder.setPositiveButton("검색", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        String selectString = et.getText().toString();
+                        et.setText("");
+                        final JsonParse jsonParse = new JsonParse();      // AsyncTask 생성
+                        jsonParse.execute("http://121.153.150.157:81/select.php",selectString);     // AsyncTask 실행
+                    }
+                });
+                AlertDialog alertDialog = builder.create();
+                alertDialog.show();
             }
         });
     }
@@ -60,8 +74,9 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             // execute의 매개변수를 받아와서 사용
             String url = strings[0];
+            String selectString = strings[1];
             try {
-                String selectData = "Data=" + editText.getText().toString();
+                String selectData = "Data=" + selectString;
                 // 따옴표 안과 php의 post [ ] 안이 이름이 같아야 함
                 URL serverURL = new URL(url);
                 HttpURLConnection httpURLConnection = (HttpURLConnection) serverURL.openConnection();
@@ -110,31 +125,42 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String fromdoInBackgroundString) { // doInBackgroundString에서 return한 값을 받음
             super.onPostExecute(fromdoInBackgroundString);
-
-            if(fromdoInBackgroundString == null)
-                textView.setText("error");
+            AlertDialog.Builder builder = new AlertDialog.Builder(context);
+            builder.setTitle("검색결과");
+            if(fromdoInBackgroundString == null) {
+                builder.setMessage("검색할 수 없습니다.");
+            }
             else {
                 jsonString = fromdoInBackgroundString;
                 treeArrayList = doParse();
-                if(treeArrayList.size() == 0)   textView.setText("검색결과 없음");
+                if(treeArrayList.size() == 0)   {
+                    builder.setMessage("검색 결과가 없습니다.");
+                }
                 // 객체의 크기가 0일때는 검색 결과가 없을 때이므로 검색결과 없음 설정
                 else {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(context);
-                    builder.setTitle(editText.getText().toString() + "의 검색결과");
                     CharSequence item[] = new CharSequence[treeArrayList.size()];
                     for(int i = 0 ; i < treeArrayList.size() ; i++) {
-                        item[i] = "수고 = " + treeArrayList.get(i).getTreeHeight();
+                        item[i] = "수고 = " + treeArrayList.get(i).getTreeHeight() +
+                                  "\t근원직경 = " + treeArrayList.get(i).getRootCollar() +
+                                  "\t흉고직경 = " + treeArrayList.get(i).getBreastHeight() +
+                                  "\n수관폭 = " + treeArrayList.get(i).getWidthCrown() +
+                                  "\t수관길이 = " + treeArrayList.get(i).getLength() +
+                                  "\t지하고 = " + treeArrayList.get(i).getCrownHeight();
                     }
                     builder.setItems(item, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
-                                textView.setText(treeArrayList.get(which).getLocation());
+                            Tree intentTreeList = treeArrayList.get(which);
+                            Intent intent = new Intent(MainActivity.this, InputActivity.class);
+                            intent.putExtra("Tree", intentTreeList);
+                            startActivity(intent);
                         }
                     });
-                    AlertDialog alertDialog = builder.create();
-                    alertDialog.show();
+
                 }
             }
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
         }
 
         @Override
