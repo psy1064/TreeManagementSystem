@@ -153,6 +153,7 @@ public class MainActivity extends AppCompatActivity {
                             Tree intentTreeList = treeArrayList.get(which);
                             Intent intent = new Intent(MainActivity.this, InputActivity.class);
                             intent.putExtra("Tree", intentTreeList);
+                            intent.putExtra("TreeList", treeArrayList);
                             startActivity(intent);
                         }
                     });
