@@ -6,7 +6,7 @@ public class Tree implements Serializable {
     String name;            // 이름
     String category;        // 카테고리
     String keyword;         // 키워드
-    int number;             // 보유수량
+    int count;             // 보유수량
     int price;              // 주당가격
     String location;        // 위치
     String ect;             // 특이사항
@@ -43,12 +43,12 @@ public class Tree implements Serializable {
         this.keyword = keyword;
     }
 
-    public int getNumber() {
-        return number;
+    public int getCount() {
+        return count;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setCount(int count) {
+        this.count = count;
     }
 
     public int getPrice() {

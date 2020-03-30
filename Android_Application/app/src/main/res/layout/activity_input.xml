@@ -6,4 +6,164 @@
     android:layout_height="match_parent"
     tools:context=".InputActivity">
 
+    <TextView
+        android:id="@+id/treeDetailText"
+        android:layout_width="545dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/rect"
+        android:gravity="left"
+        android:paddingLeft="20dp"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:text="품명 = "
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/priceCheckButton"
+        android:layout_width="127dp"
+        android:layout_height="98dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/rect"
+        android:text="원가 확인"
+        android:textSize="20sp"
+        app:layout_constraintStart_toEndOf="@+id/treeDetailText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/putBasketButton"
+        android:layout_width="127dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginRight="24dp"
+        android:layout_marginBottom="32dp"
+        android:text="담기"
+        android:background="@drawable/rect"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/finishButton" />
+
+    <Button
+        android:id="@+id/finishButton"
+        android:layout_width="127dp"
+        android:layout_height="81dp"
+        android:layout_marginEnd="52dp"
+        android:layout_marginRight="52dp"
+        android:layout_marginBottom="32dp"
+        android:text="완료"
+        android:background="@drawable/rect"
+        android:textSize="20sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="861dp"
+        android:layout_height="510dp"
+        android:layout_marginStart="48dp"
+        android:layout_marginLeft="48dp"
+        android:layout_marginTop="36dp"
+        android:background="@drawable/rect"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/treeDetailText" />
+
+    <TextView
+        android:id="@+id/countTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="64dp"
+        android:text="재고"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/countValueText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="80dp"
+        android:layout_marginLeft="80dp"
+        android:layout_marginTop="64dp"
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/countTextTitle"
+        app:layout_constraintTop_toTopOf="@+id/textView2" />
+
+    <TextView
+        android:id="@+id/sellCountTextTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="56dp"
+        android:text="판매수량"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/countTextTitle" />
+
+    <EditText
+        android:id="@+id/priceEditText"
+        android:layout_width="152dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="40dp"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/priceTitleText"
+        app:layout_constraintTop_toBottomOf="@+id/sellCountEditText" />
+
+    <TextView
+        android:id="@+id/priceTitleText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="56dp"
+        android:text="주당가격"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/sellCountTextTitle" />
+
+    <EditText
+        android:id="@+id/sellCountEditText"
+        android:layout_width="152dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="48dp"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/sellCountTextTitle"
+        app:layout_constraintTop_toBottomOf="@+id/countValueText" />
+
+    <TextView
+        android:id="@+id/finalPriceText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="72dp"
+        android:layout_marginLeft="72dp"
+        android:layout_marginTop="56dp"
+        android:text="결제금액"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/priceTitleText" />
+
+    <TextView
+        android:id="@+id/finalPriceValue"
+        android:layout_width="95dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginTop="48dp"
+        android:text=""
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/finalPriceText"
+        app:layout_constraintTop_toBottomOf="@+id/priceEditText" />
+
 </android.support.constraint.ConstraintLayout>

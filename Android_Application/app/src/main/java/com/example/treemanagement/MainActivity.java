@@ -190,7 +190,7 @@ public class MainActivity extends AppCompatActivity {
                     tmpTree.setName(item.getString("이름"));
                     tmpTree.setCategory(item.getString("카테고리"));
                     tmpTree.setKeyword(item.getString("키워드"));
-                    tmpTree.setNumber(item.getInt("보유수량"));
+                    tmpTree.setCount(item.getInt("보유수량"));
                     tmpTree.setPrice(item.getInt("주당가격"));
                     tmpTree.setLocation(item.getString("위치"));
                     tmpTree.setEct(item.getString("특이사항"));
